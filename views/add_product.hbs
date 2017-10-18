@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <script>
+        function category() {
+
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <table>
+        <form name="add" action="/products/insert" method="post" encType="multipart/form-data">
+            <table width="100%">
+                <tr>
+                    <td align="left" width="10%"> Product Name:</td>
+                    <td>
+                        <input type="Text" name="prod_name">
+                    </td>
+                </tr>
+                <br>
+                <tr>
+                    <td align="left" width="10%"> Product Price:</td>
+                    <td>
+                        <input type="Text" name="prod_price">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" width="10%"> category_id:</td>
+                    {{!--
+                    <td>
+                        <input type="text" name="categ_id">
+                    </td> --}}
+                        
+                    <td>
+                        <select name="categ_id">
+                        {{#each results}}
+                            
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+
+                        </select>
+                        
+                    </td>
+                    
+                </tr>
+
+                 <tr>
+                    <td align="left" width="10%">Add Image</td>
+                    <td><input type="file" name="sampleFile" /></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="submit" value="Add">
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+
+
+        </form>
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<html>
+    <head>
+    <style>
+    div.container {
+        width: 100%;
+        border: 1px solid #0FDD3C;
+    }
+    
+    header, footer {
+        padding: 1em;
+        color: white;
+        background-color: #2C252B;
+        clear: left;
+        text-align: center;
+    }
+    
+    nav {
+        float: left;
+        max-width: 160px;
+        margin: 0;
+        padding: 1em;
+    }
+    
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+       
+    nav ul a {
+        text-decoration: none;
+    }
+    
+    article {
+        margin-left: 170px;
+        border-left: 1px solid #0B86D8;
+        padding: 1em;
+        overflow: hidden;
+        text-align: center;
+
+    }
+    </style>
+
+    <script>
+
+        function change_cat()
+            {
+                
+            }
+
+            function category1()
+            {
+                alert("as");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/display");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function (data) {
+                console.log(data);
+                if (this.readyState == 4 && this.status == 200) {
+
+                    
+                        document.getElementById("category1").value='1';
+                    
+
+                }
+                xhr.send();
+            };
+            }
+
+
+
+
+    </script>
+    </head>
+    <body>
+    
+    <div class="container">
+    
+    <header>
+        <a href ="/logout"><input type="button"   value="Logout" style="float: right;"></a>
+        
+       <h1>Online Shopping</h1>
+
+       
+       
+    </header>
+      
+    <nav>
+      <ul>
+ 
+        <li><a href ="/category">Categories</a></li>
+        <br>
+        <li><a href="/products">Products</a></li>
+        
+      </ul>
+    </nav>
+    
+    <article>
+      <h1>Welcome </h1>
+
+      
+    
+    <footer>Copyright &copy; Viraj</footer>
+    
+    </div>
+    
+    </body>
+    </html>
+    

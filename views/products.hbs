@@ -1,0 +1,181 @@
+<html>
+
+<head>
+    <style>
+        div.container {
+            width: 100%;
+            border: 1px solid #0FDD3C;
+        }
+
+        header,
+        footer {
+            padding: 1em;
+            color: white;
+            background-color: #2C252B;
+            clear: left;
+            text-align: center;
+        }
+
+        nav {
+            float: left;
+            max-width: 160px;
+            margin: 0;
+            padding: 1em;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul a {
+            text-decoration: none;
+        }
+
+        article {
+            margin-left: 170px;
+            border-left: 1px solid #0B86D8;
+            padding: 1em;
+            overflow: hidden;
+            text-align: center;
+
+        }
+    </style>
+
+    <script>
+
+        function edit() {
+
+        }
+        function deleteRow2(id) {
+            location.href = '/product?id=' + id;
+        }
+
+        function deleteRow(r) {
+
+
+            var params = {
+                "todo": r
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/delete");
+            alert("11");
+
+
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function () {
+                alert("22");
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("id_" + r);
+                    alert("33");
+                    var link = document.getElementById('id_' + r);
+                    link.style.display = 'none'; //or
+                    link.style.visibility = 'hidden';
+
+                }
+            };
+
+            xhr.send(JSON.stringify(params));
+        }
+
+        function category1() {
+            alert("as");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/display");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function (data) {
+                console.log(data);
+                if (this.readyState == 4 && this.status == 200) {
+
+
+                    document.getElementById("category1").value = '1';
+
+
+                }
+                xhr.send();
+            };
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <a href="/logout">
+                <input type="button" value="Logout" style="float: right;">
+            </a>
+            <h1>Online Shopping</h1>
+            <a href="/products/insert">
+                <input type="button" value="Add product" style="float: right;">
+            </a>
+
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/category">Categories</a>
+                </li>
+                <br>
+                <li>
+                    <a href="/products">Products</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <article>
+            <h1>Product Page</h1>
+
+
+            <div id="category1" name="todo">
+                <table id="myTable" border="1">
+
+                    <tr>
+                        <th>#</th>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>price</th>
+                        <th>image</th>
+
+                    </tr>
+                    {{#each userresults}}
+
+                    <tr id="id_{{this.id}}">
+                        <td>{{@key}} </td>
+                        <td>{{this.id}} </td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.price}}</td>
+                        <td>
+                            <img src="/edit/{{this.img}}" width="100px">
+                        </td>
+                        <td>
+                            <a href="/products/edit/{{this.id}}">
+                                <input type="button" value="Edit">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/products/delete/{{this.id}}" onclick="return confirm('Are you sure you want to delete?')">
+                                <input type="button" value="Delete">
+                            </a>
+                        </td>
+
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </article>
+
+        <footer>Copyright &copy; Viraj</footer>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+
+router.get('/',
+function(req,res){
+    res.json("listing");
+
+});
+router.get(
+    '/add',
+    function(req,res){
+        res.json("add");
+    }
+);
+
+router.post(
+    '/add',
+    function(req,res){
+        req.body;
+        res.json("add post method");
+    }
+);
+
+router.get(
+    '/edit/:id?',
+    function(req,res){
+        res.json("edit with id : " + req.params.id);
+    }
+);
+
+router.post(
+    '/edit/:id?',
+    function(req,res){
+        res.json("edit with id : " + req.params.id);
+        req.body;
+    }
+);
+router.get(
+    '/delete/:id?',
+    function(req,res){
+        // res.json("delete with id : " + req.params.id);
+        res.redirect("/category");
+    }
+);
+
+
+add_category.js 
+
+
+var express = require('express');
+var router = express.Router();
+var mySqlCon = require('mysql');
+
+var sqlInfo = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'ecomweb'
+  }
+
+router.get('/', function(req, res, next) {
+    
+    res.render('add_category');
+  });
+
+  router.post('/insert', function (req, res) {
+
+    var categ_name = req.body.categ_name;
+    
+    
+      var client = mySqlCon.createConnection(sqlInfo);
+      client.connect();
+      
+    
+      client.query("INSERT INTO category(name) VALUES('" + categ_name + "')", function (err, status) {
+    
+        client.end();
+        
+        var response = {
+          "status": 1,
+          "msg": "row inserted",
+          
+        }
+        // Handle error
+        if (err) throw err;
+        else {
+          res.redirect('/category');
+        }
+      });
+    });
+    
+  
+  module.exports = router;
+
+
+
+  add_products.js
+
+  var express = require('express');
+var router = express.Router();
+var mySqlCon = require('mysql');
+
+var sqlInfo = {
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'ecomweb'
+}
+
+router.get('/', function(req, res, next) {
+    
+    res.render('add_product');
+  });
+
+  router.post('/insert', function (req, res) {
+    
+        var prod_name = req.body.prod_name;
+        var prod_price = req.body.prod_price;
+
+        
+        
+          var client = mySqlCon.createConnection(sqlInfo);
+          client.connect();
+          
+          client.query("INSERT INTO products(name,price) VALUES('" + prod_name + "','"+ prod_price +"')", function (err, status) {
+        
+            client.end();
+            
+            var response = {
+              "status": 1,
+              "msg": "row inserted",
+              
+            }
+            // Handle error
+            if (err) throw err;
+            else {
+              res.redirect('/products');
+            }
+          });
+        });
+  
+  module.exports = router;
+  
+  

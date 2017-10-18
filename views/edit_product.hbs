@@ -1,0 +1,56 @@
+<html>
+
+<head>
+
+
+</head>
+
+<body>
+
+
+    <form name="edit" action="/products/edit" method="post" encType="multipart/form-data">
+        <table>
+            <table width="100%">
+                
+
+                <tr>
+                    <td align="left" width="10%"> New Product Name:</td>
+                    <td>
+                        <input type="Text" name="name" value="{{results.name}}">
+                        <input type="hidden" name="id" value="{{results.id}}">
+                    </td>
+
+                </tr>
+                <br>
+                <tr>
+                    <td align="left" width="10%"> New Product Price:</td>
+                    <td>
+                        <input type="Text" name="price" value="{{results.price}}">
+                        
+                    </td>
+
+                </tr>
+                <tr>
+                    <td align="left" width="10%">Edit Image</td>
+                    <td><input type="file" name="sampleFile" value="{{results.img}}" /></td>
+                    <td><input type="hidden" name="hdn_img" value="/edit/{{results.img}}"></td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Add">
+                    </td>
+                </tr>
+
+
+
+
+
+
+            </table>
+    </form>
+
+
+</body>
+
+</html>
