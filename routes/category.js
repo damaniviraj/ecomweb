@@ -4,6 +4,12 @@ var router = express.Router();
 var mySqlCon = require('mysql');
 var fs = require('fs');
 var fileUpload = require('express-fileupload'); // only for file upload
+//var isUserAuthenticated = require('isUserAuthenticated');
+
+
+
+router.use(session({ secret: 'keyboard cat',saveUninitialized:false, resave:false, cookie: { maxAge: 60000 }}));
+
 
 
 

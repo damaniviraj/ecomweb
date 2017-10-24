@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var fileUpload = require('express-fileupload');
 
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var session = require('./routes/session');
@@ -20,6 +21,47 @@ var upload = require('./routes/upload');
 
 var app = express();
 
+function isUserAuthenticated(req,res,next){
+  //you can check anything heref like req.url ,session ect.
+   
+  //so let's check if user session exists
+  if(req.session.email){
+  //user logged in
+  return next();
+  }
+  //user not authenticated redirect them to login page or anywhere you want
+  res.redirect("/");
+  };
+
+var authenticate = function (req, res, next) {
+
+   var ses =function (error, results, fields)
+  {
+    
+        client.end();
+        if (error) {
+          // console.log("error ocurred",error);
+          res.send({
+            "code": 400,
+            "failed": "error ocurred"
+          })
+        } else {
+          if (results != "") {
+                sess = req.session;         
+                sess.email=email;
+                if(sess.email){
+                  res.render('welcome');
+              }
+              else{
+                res.render('index', { title: 'Login ' });
+              }
+            }
+          }
+          }
+  
+next();
+};  
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -30,8 +72,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(authenticate);
+//app.use(isUserAuthenticated);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
+
+
 //app.use(session({secret: 'max', saveUninitialized:false, resave:false}));
 
 
@@ -39,8 +85,8 @@ app.use(fileUpload());
 app.use('/', index);
 app.use('/users', users);
 app.use('/session',session);
-app.use('/category',category);
-app.use('/products',products);
+app.use('/category',isUserAuthenticated, category);
+app.use('/products',isUserAuthenticated, products);
 app.use('/upload',upload);
 //app.use('/add_product',add_product);
 
